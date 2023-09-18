@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
 public class hCube
@@ -147,7 +149,7 @@ public class MapDrawer : MonoBehaviour
         return positions;
     }
 
-    void makeMap()
+    public void makeMap()
     {
         int numRooms = 0;
         for (int i = 0; i < maxRooms; i++)
@@ -183,16 +185,24 @@ public class MapDrawer : MonoBehaviour
             numRooms += 1;
         }
 
-        print("aq");
+        print("makeMaped");
+        //SpawnEnemies(); 
         foreach (var item in rooms)
         {
             print("a");
             EnemySpawner.Instance.SpawnEnemies(item);
         }
     }
-
-
-
+    
+    public void Spawn2thEnemies()
+    {
+        foreach (var item in rooms)
+        {
+            print("2th Spawn");
+            EnemySpawner.Instance.SpawnEnemies(item);
+        }
+    }
+    
     List<Vector4> GetNeighbours(Vector4 v)
     {
         return new List<Vector4>() { v + new Vector4(-1,1), v + new Vector4(0,1), v + new Vector4(1,1),
