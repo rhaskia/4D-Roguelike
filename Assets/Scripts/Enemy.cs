@@ -13,25 +13,19 @@ public class Enemy : MonoBehaviour
 
     public SpriteRenderer sprite;
 
-    // Start is called before the first frame update
     void Start()
-    {
-        gridSize = FindObjectOfType<MapDrawer>();
+    {   gridSize = FindObjectOfType<MapDrawer>();
         plr = FindObjectOfType<FourDPlayer>();
     }
 
-    // Update is called once per frame
     void Update()
-    {
-        transform.position = new Vector3(position.x / gridSize.gridSize + position.w, position.y / gridSize.gridSize + position.z, 0);
-
+    {   transform.position = new Vector3(position.x / gridSize.gridSize + position.w, position.y / gridSize.gridSize + position.z, 0);
         sprite.color = gridSize.Within5(position, plr.position) ? Color.white : new Color(255, 255, 255, 0);
 
         if (combat.HP < 1)
-        {
-            print("died");
-            EnemySpawner.Instance.enemies.Remove(this);
-            Destroy(gameObject);
+        {   print("died");
+            EnemySpawner.Instance.enemies.Remove(this); Destroy(gameObject);
+            MapDrawer.Instance.Spawn2thEnemies();
         }
     }
 
@@ -49,12 +43,9 @@ public class Enemy : MonoBehaviour
         print(d);
 
         if (position + d == plr.position)
-        {
-            combat.Attack(plr.combat);
-        }
+        {   combat.Attack(plr.combat);}
         else if (gridSize.tilemap.GetTile(FourToTwo(position + d)) != null && !EnemySpawner.Instance.EnemyAtPoint(position + d))
-        {
-            position += d;
+        {   position += d;
             gridSize.UpdateScreen();
         }
     }
